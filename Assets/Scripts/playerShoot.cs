@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class playerShoot : MonoBehaviour
 {
-    public Transform BulletOrifice;
-    public GameObject Bullet;
-    public float BulletSpeed = 10f;
+    public Transform bulletOrifice;
+    public GameObject bullet;
 
-    void Update()
-    {
-        
+    public void Boom() {
+        GameObject inst = Instantiate(bullet);
+        inst.transform.position = bulletOrifice.transform.position;
+    }
+
+    void Update() {
+        if (Input.GetButton("Fire1"))
+        {
+            Boom();
+        }
     }
 }

@@ -7,8 +7,12 @@ public class playerMove : MonoBehaviour
 {
     private CircleCollider2D coll;
     private Rigidbody2D rb;
-    public float sped;
+    public float basesped;
+    private float sped;
 
+    void Start() {
+        sped = basesped;
+    }
     void Awake()
     {
         coll = GetComponent<CircleCollider2D>();
@@ -23,6 +27,9 @@ public class playerMove : MonoBehaviour
         dir.x = Input.GetAxisRaw("Horizontal");
         dir.y = Input.GetAxisRaw("Vertical");
 
-        rb.MovePosition(rb.position + dir * Time.deltaTime * sped);
+        if (Input.GetKeyDown(KeyCode.LeftShift)) sped = basesped*0.5f;
+        if (Input.GetKeyUp(KeyCode.LeftShift)) sped = basesped;
+
+        rb.MovePosition(rb.position + dir * sped * Time.deltaTime);
     }
 }
