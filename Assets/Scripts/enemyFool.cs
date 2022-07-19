@@ -10,7 +10,10 @@ public class enemyFool : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("playerBullet"))
         {
-            print("ho");
+            // print("ho");
+            GetComponent<ParticleSystem>().Play();
+
+            Destroy(other.gameObject);
         }
     }
     void Start()

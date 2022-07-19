@@ -1,35 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+// using UnityEngine.InputSystem;
 
 public class playerMove : MonoBehaviour
 {
-    private CircleCollider2D coll;
     private Rigidbody2D rb;
-    public float basesped;
-    private float sped;
+    private Vector2 inputDir;
 
-    void Start() {
-        sped = basesped;
-    }
+    //Publics
+    public float basesped;
+    public float focusMultiplier;
+    public ModifierList spedMods;
+
     void Awake()
     {
-        coll = GetComponent<CircleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
+        spedMods = new ModifierList();
     }
 
-    // Update is called once per frame
+    // Update is called once every frame
     void Update()
     {
-        Vector2 dir;
+        inputDir = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-        dir.x = Input.GetAxisRaw("Horizontal");
-        dir.y = Input.GetAxisRaw("Vertical");
+        if (Input.GetKeyDown(KeyCode.LeftShift)) spedMods.SetMod(focusMultiplier, "FocusMod");
+        if (Input.GetKeyUp(KeyCode.LeftShift)) spedMods.RemoveMod("FocusMod");
+    }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift)) sped = basesped*0.5f;
-        if (Input.GetKeyUp(KeyCode.LeftShift)) sped = basesped;
-
-        rb.MovePosition(rb.position + dir * sped * Time.deltaTime);
+    // FixedUpdate is called once every 0.02 seconds
+    void FixedUpdate()
+    {
+        rb.MovePosition(rb.position + inputDir * Time.deltaTime * (basesped * spedMods.Get()));
     }
 }
