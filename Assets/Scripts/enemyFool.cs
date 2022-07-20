@@ -14,6 +14,11 @@ public class enemyFool : MonoBehaviour
             GetComponent<ParticleSystem>().Play();
 
             Destroy(other.gameObject);
+            
+            if (TryGetComponent(out Health health))
+            {
+                health.DoDelta(-1);
+            }
         }
     }
     void Start()
