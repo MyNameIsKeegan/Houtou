@@ -10,6 +10,7 @@ public class playerMove : MonoBehaviour
 
     //Publics
     public float basesped;
+    [Space]
     public float focusMultiplier;
     public ModifierList spedMods;
 
