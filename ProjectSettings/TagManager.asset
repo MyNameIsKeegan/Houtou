@@ -4,15 +4,16 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - playerBullet
+  - BulletSponge
+  - Bullet
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Background
   - Water
   - UI
-  - 
+  - Bullet
   - 
   - 
   - 
@@ -41,4 +42,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Top
+    uniqueID: 523651401
+    locked: 0
+  - name: FX
+    uniqueID: 2711882591
+    locked: 0
+  - name: Player
+    uniqueID: 1415943735
+    locked: 0
+  - name: Characters
+    uniqueID: 2245544687
+    locked: 0
+  - name: Background
+    uniqueID: 1467417857
     locked: 0

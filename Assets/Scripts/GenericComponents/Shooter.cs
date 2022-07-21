@@ -5,14 +5,12 @@ using UnityEngine;
 public class Shooter : MonoBehaviour
 {
     public Transform bulletOrifice;
-    public GameObject bullet;
-
     private float shootCooldown = 0f;
     public float shootsPerSecond = 10;
 
     public void Boom() {
-        GameObject inst = Instantiate(bullet);
-        inst.transform.position = bulletOrifice.transform.position;
+        GameObject inst = PrefabManager.Instance.Spawn("bullet", bulletOrifice.transform.position);
+        inst.GetComponent<Bullet>().source = gameObject;
     }
 
     public void TryBoom()

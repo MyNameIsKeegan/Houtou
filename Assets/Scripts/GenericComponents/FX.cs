@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class FX : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public float lifetime = 3f;
     void Start()
     {
-        Invoke("kys", 3);
+        Invoke("kys", lifetime);
     }
 
     void kys()
