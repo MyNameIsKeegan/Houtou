@@ -34,10 +34,7 @@ public class Bullet : MonoBehaviour
         // Terrible way to figure out if we're hitting the player's bullet sponge.
         if (!other.CompareTag("BulletSponge") || other.gameObject == source.transform.Find("PlayerBulletSponge").gameObject) return; // Bullets shouldn't hit their source!
 
-        if (other.TryGetComponent(out Health health))
-        {
-            health.DoDelta(-damage);
-        }
+        if (other.TryGetComponent(out Health health)) health.DoDelta(-damage);
 
         print(other.name);
         Die();

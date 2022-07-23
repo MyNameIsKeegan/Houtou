@@ -27,10 +27,7 @@ public class Health : MonoBehaviour
         // Ignore everything else if we're in god mode
         if (godMode) return;
 
-        if (currentHealth <= deathHealth)
-        {
-            Die();
-        }
+        if (currentHealth <= deathHealth) Die();
     }
 
     public void Die()

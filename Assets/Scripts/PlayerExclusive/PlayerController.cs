@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -29,16 +30,18 @@ public class PlayerController : MonoBehaviour
         bulletSpongeBox = transform.Find("PlayerBulletSponge").GetComponent<SpriteRenderer>();
     }
 
+    void OnMove(InputValue movValue)
+    {
+        inputDir = movValue.Get<Vector2>();
+    }
+
     // Update is called once every frame
     void Update()
     {
         
-        if (Input.GetKey(KeyCode.Z))
-        {
-            shooter.TryBoom();
-        }
+        if (Input.GetKey(KeyCode.Z)) shooter.TryBoom();
 
-        inputDir = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        // inputDir = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         
         if (Input.GetKeyDown(KeyCode.LeftShift)) StartFocusing();
         if (Input.GetKeyUp(KeyCode.LeftShift)) StopFocusing();
