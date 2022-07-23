@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+    // General purpose health component, use on ANYTHING that has health.
     public float maxHealth = 1;
     public float currentHealth = 1;
     public float deathHealth = 0;
