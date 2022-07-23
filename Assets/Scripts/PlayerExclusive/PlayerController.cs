@@ -38,8 +38,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once every frame
     void Update()
     {
-        
-        if (Input.GetKey(KeyCode.Z)) shooter.TryBoom();
+        // polling for up and down events is much better than polling the general state every time, 
+        //doubles the load here but substantially decreases load elsewhere
+        if (Input.GetKeyDown(KeyCode.Z)) shooter.StartBooming();
+        if (Input.GetKeyUp(KeyCode.Z)) shooter.StopBooming();
 
         // inputDir = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         
