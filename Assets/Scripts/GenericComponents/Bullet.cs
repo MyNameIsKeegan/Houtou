@@ -30,7 +30,7 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {  
         // No need to check objects anymore, as long as we keep our layers clean we can only hit objects we're supposed to.
-        if (other.TryGetComponent(out Health health)) health.DoDelta(-damage);
+        if (other.TryGetComponent(out Health health)) health.DoDelta(-damage, source);
 
         Destroy(gameObject);
     }

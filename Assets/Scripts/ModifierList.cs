@@ -52,10 +52,7 @@ public class ModifierList
     {
         float outputModifier = 1;
 
-        modifiers.ForEach(delegate(float mod)
-        {
-            outputModifier *= mod;
-        });
+        modifiers.ForEach(mod => outputModifier*=mod);
 
         lastMod = outputModifier;
         return outputModifier;
@@ -66,10 +63,7 @@ public class ModifierList
     {
         float outputModifier = 1;
 
-        modifiers.ForEach(delegate(float mod)
-        {
-            outputModifier /= mod;
-        });
+        modifiers.ForEach(mod => outputModifier/=mod);
 
         lastMod = outputModifier;
         return outputModifier;
@@ -81,11 +75,8 @@ public class ModifierList
     {
         float outputModifier = 0;
 
-        modifiers.ForEach(delegate(float mod)
-        {
-            outputModifier += mod;
-        });
-
+        modifiers.ForEach(mod => outputModifier*=mod);
+        
         lastMod = outputModifier;
         return outputModifier;
     }

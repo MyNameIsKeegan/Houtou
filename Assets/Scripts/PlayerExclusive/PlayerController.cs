@@ -56,15 +56,9 @@ public class PlayerController : MonoBehaviour
     {
         controls.Player.Move.performed += ctx => inputDir = ctx.ReadValue<Vector2>();
         controls.Player.Move.canceled += ctx => inputDir = Vector2.zero;
-        // polling for up and down events is much better than polling the general state every time, 
-        //doubles the load here but substantially decreases load elsewhere
-        controls.Player.Fire.performed += ctx => shooter.StartBooming();
-        controls.Player.Fire.performed += ctx => shooter.StopBooming();
-        // if (Input.GetKeyDown(KeyCode.Z)) shooter.StartBooming();
-        // if (Input.GetKeyUp(KeyCode.Z)) shooter.StopBooming();
 
         controls.Player.Fire.performed += ctx => shooter.StartBooming();
-        controls.Player.Fire.performed += ctx => shooter.StopBooming();
+        controls.Player.Fire.canceled += ctx => shooter.StopBooming();
 
         controls.Player.Focus.performed += ctx => StartFocusing();
         controls.Player.Focus.canceled += ctx => StopFocusing();
