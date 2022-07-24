@@ -13,8 +13,8 @@ TagManager:
   - Background
   - Water
   - UI
-  - Bullet
-  - 
+  - EnemyBullet
+  - FriendlyBullet
   - 
   - 
   - 

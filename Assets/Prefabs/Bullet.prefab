@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8409586476816182587}
   - component: {fileID: 4517443121581501222}
   - component: {fileID: 5170468317493019861}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Bullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -146,8 +146,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c56090bde9087041a5cf3de7c189f49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: {x: 0, y: 0}
+  direction: {x: 0, y: 1}
   speed: 1500
   damage: 1
-  lifetime: 1
+  lifetime: 10
   source: {fileID: 0}
