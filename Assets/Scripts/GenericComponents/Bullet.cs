@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    // General purpose bullet/projectile component. Stats planned to be calculated based on the Shooter component it comes from when shot/launched.
+    // We should also have some preset values and safeties though, in case we need to spawn a bullet standalone or something.
     private Rigidbody2D rb;
     
-    public float sped;
+    public Vector2 direction = new Vector2(0, 1);
+    public float speed = 1500;
     public float damage = 1f;
-    public float lifetime = 1f;
+    public float lifetime = 10f;
     [Space]
     public GameObject source;
     
@@ -20,23 +23,21 @@ public class Bullet : MonoBehaviour
     
     public void Start()
     {
-        rb.AddForce(new Vector2(0, sped));
-        Invoke("Die", lifetime);
-    }
-
-    void Die()
-    {
-        Destroy(gameObject);
+        rb.AddForce(direction * speed);
+        Invoke("EmergencyDie", lifetime);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
-    {
-        // Terrible way to figure out if we're hitting the player's bullet sponge.
-        if (!other.CompareTag("BulletSponge") || other.gameObject == source.transform.Find("PlayerBulletSponge").gameObject) return; // Bullets shouldn't hit their source!
-
+    {  
+        // No need to check objects anymore, as long as we keep our layers clean we can only hit objects we're supposed to.
         if (other.TryGetComponent(out Health health)) health.DoDelta(-damage);
 
-        print(other.name);
-        Die();
+        Destroy(gameObject);
+    }
+
+    void EmergencyDie()
+    {
+        Debug.LogWarning("Bullet existed for more than 10 seconds, destroying...");
+        Destroy(gameObject);
     }
 }
