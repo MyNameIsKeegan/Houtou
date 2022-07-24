@@ -63,10 +63,9 @@ public class PlayerController : MonoBehaviour
         // if (Input.GetKeyDown(KeyCode.Z)) shooter.StartBooming();
         // if (Input.GetKeyUp(KeyCode.Z)) shooter.StopBooming();
 
-        // inputDir = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        
-        // if (Input.GetKeyDown(KeyCode.LeftShift)) StartFocusing();
-        // if (Input.GetKeyUp(KeyCode.LeftShift)) StopFocusing();
+        controls.Player.Fire.performed += ctx => shooter.StartBooming();
+        controls.Player.Fire.performed += ctx => shooter.StopBooming();
+
         controls.Player.Focus.performed += ctx => StartFocusing();
         controls.Player.Focus.canceled += ctx => StopFocusing();
     }
