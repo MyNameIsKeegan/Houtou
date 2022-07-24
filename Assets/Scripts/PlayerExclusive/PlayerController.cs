@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
         // Movement
     [Space]
     [Header("Movement")]
+    private Houtou controls;
     private Vector2 inputDir;
     public float basesped;
     public float focusMultiplier = 0.15f;
@@ -25,28 +26,49 @@ public class PlayerController : MonoBehaviour
     {
         shooter = GetComponent<Shooter>();
         rb = GetComponent<Rigidbody2D>();
+        controls = new Houtou();
 
         sprite = GetComponent<SpriteRenderer>();
         bulletSpongeBox = transform.Find("PlayerBulletSponge").GetComponent<SpriteRenderer>();
     }
 
-    void OnMove(InputValue movValue)
+    private void OnEnable()
     {
-        inputDir = movValue.Get<Vector2>();
+        controls.Player.Enable();
     }
+
+    private void OnDisable()
+    {    
+        controls.Player.Disable();
+    }
+
+    // void OnMove(InputValue movValue)
+    // {
+    //     inputDir = movValue.Get<Vector2>();
+    // }
+
+    // void OnFocus() {
+    //     StartFocusing();
+    // }
 
     // Update is called once every frame
     void Update()
     {
+        controls.Player.Move.performed += ctx => inputDir = ctx.ReadValue<Vector2>();
+        controls.Player.Move.canceled += ctx => inputDir = Vector2.zero;
         // polling for up and down events is much better than polling the general state every time, 
         //doubles the load here but substantially decreases load elsewhere
-        if (Input.GetKeyDown(KeyCode.Z)) shooter.StartBooming();
-        if (Input.GetKeyUp(KeyCode.Z)) shooter.StopBooming();
+        // controls.Player.Fire.performed += ctx => shooter.StartBooming();
+        // controls.Player.Fire.performed += ctx => shooter.StopBooming();
+        // if (Input.GetKeyDown(KeyCode.Z)) shooter.StartBooming();
+        // if (Input.GetKeyUp(KeyCode.Z)) shooter.StopBooming();
 
         // inputDir = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         
-        if (Input.GetKeyDown(KeyCode.LeftShift)) StartFocusing();
-        if (Input.GetKeyUp(KeyCode.LeftShift)) StopFocusing();
+        // if (Input.GetKeyDown(KeyCode.LeftShift)) StartFocusing();
+        // if (Input.GetKeyUp(KeyCode.LeftShift)) StopFocusing();
+        controls.Player.Focus.performed += ctx => StartFocusing();
+        controls.Player.Focus.canceled += ctx => StopFocusing();
     }
 
     // FixedUpdate is called once every 0.02 seconds
