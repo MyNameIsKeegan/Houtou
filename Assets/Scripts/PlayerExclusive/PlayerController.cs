@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
         // Movement
     [Space]
     [Header("Movement")]
-    private Houtou controls;
+    private Houtou controls; // i have been controlled by an alien
     private Vector2 inputDir;
     public float basesped;
     public float focusMultiplier = 0.15f;
@@ -24,11 +24,14 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
+        // Component references
         shooter = GetComponent<Shooter>();
         rb = GetComponent<Rigidbody2D>();
+        sprite = GetComponent<SpriteRenderer>();
+
         controls = new Houtou();
 
-        sprite = GetComponent<SpriteRenderer>();
+        // TODO Find a better way to do this 
         bulletSpongeBox = transform.Find("PlayerBulletSponge").GetComponent<SpriteRenderer>();
     }
 
@@ -42,34 +45,49 @@ public class PlayerController : MonoBehaviour
         controls.Player.Disable();
     }
 
-    // void OnMove(InputValue movValue)
-    // {
-    //     inputDir = movValue.Get<Vector2>();
-    // }
+    // Control functions, these are called only upon input state changes, NOT continuously!
+    public void OnMove(InputAction.CallbackContext ctx)
+    {
+        inputDir = ctx.ReadValue<Vector2>();
+    }
 
-    // void OnFocus() {
-    //     StartFocusing();
-    // }
+    public void OnFire(InputAction.CallbackContext ctx)
+    {
+        if (ctx.ReadValueAsButton()) shooter.StartBooming();
+        else shooter.StopBooming();
+    }
+
+    public void OnFocus(InputAction.CallbackContext ctx)
+    {
+        if (ctx.ReadValueAsButton()) StartFocusing();
+        else StopFocusing();
+    }
+
+    public void OnBomb(InputAction.CallbackContext ctx)
+    {
+        Debug.LogWarning("Bombs not implemented.");
+    }
 
     // Update is called once every frame
     void Update()
     {
-        controls.Player.Move.performed += ctx => inputDir = ctx.ReadValue<Vector2>();
-        controls.Player.Move.canceled += ctx => inputDir = Vector2.zero;
+        // controls.Player.Move.performed += ctx => inputDir = ctx.ReadValue<Vector2>();
+        // controls.Player.Move.canceled += ctx => inputDir = Vector2.zero;
 
-        controls.Player.Fire.performed += ctx => shooter.StartBooming();
-        controls.Player.Fire.canceled += ctx => shooter.StopBooming();
+        // controls.Player.Fire.performed += ctx => shooter.StartBooming();
+        // controls.Player.Fire.canceled += ctx => shooter.StopBooming();
 
-        controls.Player.Focus.performed += ctx => StartFocusing();
-        controls.Player.Focus.canceled += ctx => StopFocusing();
+        // controls.Player.Focus.performed += ctx => StartFocusing();
+        // controls.Player.Focus.canceled += ctx => StopFocusing();
     }
 
-    // FixedUpdate is called once every 0.02 seconds
+    // FixedUpdate is called with physics updates every 0.02 seconds
     void FixedUpdate()
     {
         rb.MovePosition(rb.position + inputDir * Time.deltaTime * (basesped * spedMods.Get()));
     }
 
+    // Focus functions
     void StartFocusing()
     {
         sprite.color = new Color32(255, 177, 245, 127);
