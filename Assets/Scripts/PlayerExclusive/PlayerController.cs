@@ -71,14 +71,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once every frame
     void Update()
     {
-        // controls.Player.Move.performed += ctx => inputDir = ctx.ReadValue<Vector2>();
-        // controls.Player.Move.canceled += ctx => inputDir = Vector2.zero;
 
-        // controls.Player.Fire.performed += ctx => shooter.StartBooming();
-        // controls.Player.Fire.canceled += ctx => shooter.StopBooming();
-
-        // controls.Player.Focus.performed += ctx => StartFocusing();
-        // controls.Player.Focus.canceled += ctx => StopFocusing();
     }
 
     // FixedUpdate is called with physics updates every 0.02 seconds

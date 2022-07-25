@@ -5849,7 +5849,7 @@ MonoBehaviour:
   bulletOrifice: {fileID: 1647267872}
   shootsPerSecond: 20
   bulletDamage: 1
-  bulletSpeed: 25
+  bulletSpeed: 50
 --- !u!114 &1664676210
 MonoBehaviour:
   m_ObjectHideFlags: 0
