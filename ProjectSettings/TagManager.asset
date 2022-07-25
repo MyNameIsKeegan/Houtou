@@ -5,7 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - BulletSponge
-  - Bullet
+  - Friendly
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -13,8 +14,8 @@ TagManager:
   - Background
   - Water
   - UI
-  - EnemyBullet
-  - FriendlyBullet
+  - Bullet
+  - 
   - 
   - 
   - 
@@ -40,21 +41,24 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 1467417857
+    locked: 0
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Top
-    uniqueID: 523651401
-    locked: 0
-  - name: FX
-    uniqueID: 2711882591
-    locked: 0
-  - name: Player
-    uniqueID: 1415943735
     locked: 0
   - name: Characters
     uniqueID: 2245544687
     locked: 0
-  - name: Background
-    uniqueID: 1467417857
+  - name: Player
+    uniqueID: 1415943735
+    locked: 0
+  - name: Bullet
+    uniqueID: 309475177
+    locked: 0
+  - name: FX
+    uniqueID: 2711882591
+    locked: 0
+  - name: Top
+    uniqueID: 523651401
     locked: 0
