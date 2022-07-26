@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer sprite;
     private SpriteRenderer bulletSpongeBox;
         // Shooting
-    private Shooter shooter;
+    private ShootersController shootersController;
         // Movement
     [Space]
     [Header("Movement")]
@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         // Component references
-        shooter = GetComponent<Shooter>();
+        shootersController = GetComponent<ShootersController>();
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
 
@@ -53,8 +53,8 @@ public class PlayerController : MonoBehaviour
 
     public void OnFire(InputAction.CallbackContext ctx)
     {
-        if (ctx.ReadValueAsButton()) shooter.StartBooming();
-        else shooter.StopBooming();
+        if (ctx.ReadValueAsButton()) shootersController.StartBoomingAll();
+        else shootersController.StopBoomingAll();
     }
 
     public void OnFocus(InputAction.CallbackContext ctx)
