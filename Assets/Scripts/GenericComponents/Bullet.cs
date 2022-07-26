@@ -10,11 +10,12 @@ public class Bullet : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
     private Light2D glow;
+    private string opposingTag;
 
     public Vector2 direction = new Vector2(0, 1);
     public float speed = 1500;
     public float damage = 1f;
-    public float lifetime = 4f;
+    public float lifetime = 2f;
     [Space]
     public bool isFriendly = true;
     [Space]
@@ -27,21 +28,21 @@ public class Bullet : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         glow = GetComponent<Light2D>();
     }
-    
-    // Using OnEnable here to prepare for object pooling
+
     private void OnEnable()
     {
-        rb.AddForce(direction * speed, ForceMode2D.Impulse); // ForceMode2D.Impulse applies the force instantly
-        Invoke("EmergencyDie", lifetime);
-
         if (isFriendly) MakeFriendly();
         else MakeEnemy();
+
+        rb.AddForce(direction * speed, ForceMode2D.Impulse); // ForceMode2D.Impulse applies the force instantly
+        Invoke("EmergencyDie", lifetime);
     }
 
     // Pooled bullets must have their velocity reset
     private void OnDisable()
     {
         rb.velocity = Vector3.zero;
+        CancelInvoke("EmergencyDie");
     }
 
     // Setting as public in case we wanna do some sort of bullet reflection or something
@@ -50,6 +51,7 @@ public class Bullet : MonoBehaviour
         sprite.color = Color.blue;
         glow.color = Color.blue;
         gameObject.tag = "Friendly";
+        opposingTag = "Enemy";
     }
 
     public void MakeEnemy()
@@ -57,22 +59,22 @@ public class Bullet : MonoBehaviour
         sprite.color = Color.red;
         glow.color = Color.red;
         gameObject.tag = "Enemy";
+        opposingTag = "Friendly";
     }
 
-    // Disabling for now, may be better to detect bullets on applicable objects rather than the other way around
-    /*
     private void OnTriggerEnter2D(Collider2D other)
     {  
-        // No need to check objects anymore, as long as we keep our layers clean we can only hit objects we're supposed to.
-        if (other.TryGetComponent(out Health health)) health.DoDelta(-damage, source);
-
-        Destroy(gameObject);
+        if (other.CompareTag(opposingTag)) gameObject.SetActive(false);
     }
-    */
 
     private void EmergencyDie()
     {
-        Debug.LogWarning("Bullet existed for more than " + lifetime.ToString() + " second(s), destroying...");
-        Destroy(gameObject);
+        Debug.LogWarning("Bullet existed for more than " + lifetime.ToString() + " second(s), disabling...");
+        gameObject.SetActive(false);
+    }
+
+    void OnBecameInvisible() 
+    {
+        gameObject.SetActive(false);
     }
 }
