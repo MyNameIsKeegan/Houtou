@@ -11,12 +11,9 @@ public class Health : MonoBehaviour
     [Space]
     public bool godMode = false;
 
-    private GameObject lastAttacker;
-
     // Delta is the only required argument, but please specifiy source when you can for cleanliness.
     public void DoDelta(float delta, GameObject source = null)
     {
-        lastAttacker = source;
         // Ignore if we're in god mode
         if (godMode) return;
 
@@ -36,8 +33,7 @@ public class Health : MonoBehaviour
         //TODO make proper death code or script
         PrefabManager.Instance.Spawn("deathfx", transform.position);
         
-        if (lastAttacker != null) Debug.Log("\"" + gameObject.name + "\" has been killed by \"" + lastAttacker.name +  "\"");
-        else Debug.LogWarning("\"" + gameObject.name + "\" has been killed under mysterious circumstances");
+        Debug.Log("\"" + gameObject.name + "\" has been suuced dry.");
         
         Destroy(gameObject);
     }
